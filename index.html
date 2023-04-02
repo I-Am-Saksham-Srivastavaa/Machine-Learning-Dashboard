@@ -214,7 +214,49 @@
           console.error(error);
         });
       });
-       
+    <script>
+    
+    <py-script> 
+      import sqlite3
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+from sklearn.naive_bayes import MultinomialNB
+
+/*Define the UDF*/
+
+def classify_text(doc):
+
+    /* Load the pre-trained model*/
+
+    vectorizer = CountVectorizer()
+
+    model = MultinomialNB()
+
+    model.fit(X_train, y_train)
+
+    
+
+    /*Vectorize the input document*/
+
+    X = vectorizer.transform([doc])
+
+    
+
+    /* Predict the class label*/
+
+    y_pred = model.predict(X)
+
+    
+
+    return y_pred[0]
+
+/*Register the UDF with SQLite*/
+
+conn = sqlite3.connect('my_database.db')
+
+conn.create_function('classify_text', 1, classify_text)
+    <py-script>
 
       
   <footer>
