@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Machine Learning Dashboard</title>
+  <style>
+    /* Style the header */
+    header {
+      background-color: #008CBA;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Style the navigation menu */
+    nav {
+      background-color: #333;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation menu */
+    nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    /* Change the color of the links on hover */
+    nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Style the main content */
+    main {
+      padding: 20px;
+    }
+
+    /* Style the footer */
+    footer {
+      background-color: #008CBA;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Machine Learning Dashboard</h1>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Datasets</a>
+    <a href="#">Models</a>
+    <a href="#">Training</a>
+    <a href="#">Evaluation</a>
+    <a href="#">Deployment</a>
+  </nav>
+
+  <main>
+    <h2>Welcome to the Machine Learning Dashboard!</h2>
+    <p>Use the navigation menu to select a dataset, a model, and start the training process.</p>
+  </main>
+  <main>
+  <h2>Add Data Inputs</h2>
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="dataset">Select a dataset:</label>
+    <select id="dataset" name="dataset">
+      <option value="iris">Iris</option>
+      <option value="wine">Wine</option>
+      <option value="diabetes">Diabetes</option>
+      <option value="titanic">Titanic</option>
+      <option value="housing">Housing Prices</option>
+      <option value="credit">Credit Card Fraud</option>
+      <option value="mnist">MNIST</option>
+    </select>
+    <br>
+    <label for="file">Upload a data file:</label>
+    <input type="file" id="file" name="file">
+    <br>
+    <label for="model">Select a machine learning model:</label>
+    <select id="model" name="model">
+      <option value="linear_regression">Linear Regression</option>
+      <option value="logistic_regression">Logistic Regression</option>
+      <option value="decision_tree">Decision Tree</option>
+      <option value="random_forest">Random Forest</option>
+      <option value="svm">Support Vector Machine</option>
+      <option value="neural_network">Neural Network</option>
+    </select>
+    <br>
+    <label for="tuning">Select a model tuning method:</label>
+    <select id="tuning" name="tuning">
+      <option value="grid_search">Grid Search</option>
+      <option value="random_search">Random Search</option>
+      <option value="bayesian_optimization">Bayesian Optimization</option>
+      <option value="genetic_algorithm">Genetic Algorithm</option>
+    </select>
+    <br>
+    <label for="evaluation">Select a model evaluation metric:</label>
+    <select id="evaluation" name="evaluation">
+      <option value="accuracy">Accuracy</option>
+      <option value="precision">Precision</option>
+      <option value="recall">Recall</option>
+      <option value="f1_score">F1 Score</option>
+      <option value="roc_auc">ROC AUC</option>
+      <option value="mean_absolute_error">Mean Absolute Error</option>
+      <option value="mean_squared_error">Mean Squared Error</option>
+    </select>
+    <br>
+    <label for="deployment">Deploy the model:</label>
+    <input type="checkbox" id="deployment" name="deployment">
+    <br>
+    <label for="platform">Select a deployment platform:</label>
+    <select id="platform" name="platform">
+      <option value="aws">Amazon Web Services (AWS)</option>
+      <option value="gcp">Google Cloud Platform (GCP)</option>
+      <option value="azure">Microsoft Azure</option>
+      <option value="ibm">IBM Cloud</option>
+      <option value="heroku">Heroku</option>
+    </select>
+    <br>
+    <label for="name">Enter a name for the deployed model:</label>
+    <input type="text" id="name" name="name">
+    <br>
+    <label for="description">Enter a description for the deployed model:</label>
+    <textarea id="description" name="description" rows="4" cols="50"></textarea>
+    <br>
+    <button type="submit">Deploy</button>
+  </form>
+  
+    <script>
+      const dataForm = document.getElementById('data-form');
+      const modelSelectionForm = document.getElementById('model-selection-form');
+      const tuningForm = document.getElementById('tuning-form');
+      const evaluationForm = document.getElementById('evaluation-form');
+      const deploymentForm = document.getElementById('deployment-form');
+
+       dataForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(dataForm);
+        fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
+
+      modelSelectionForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(modelSelectionForm);
+        fetch('/api/select', {
+          method: 'POST',
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
+
+      tuningForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(tuningForm);
+        fetch('/api/tune', {
+          method: 'POST',
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
+      evaluationForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(evaluationForm);
+        fetch('/api/evaluate', {
+          method: 'POST',
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
+
+      deploymentForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(deploymentForm);
+        fetch('/api/deploy', {
+          method: 'POST',
+          body: formData
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
+       
+
+      
+  <footer>
+    <p>Machine Learning Dashboard &copy; 2023 By Saksham Srivastava</p>
+  </footer>
+
+</body>
+</html>
